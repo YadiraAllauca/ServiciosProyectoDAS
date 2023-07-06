@@ -6,13 +6,12 @@ header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
 
 include 'conexionBDRemota.php';
 
-$id_usuario =  $_POST['id_usuario'];
-$email_usuario = $_POST['email_usuario'];
-$nombre_usuario = $_POST['nombre_usuario'];
-$apellido_usuario = $_POST['apellido_usuario'];
-$telefono_usuario = $_POST['telefono_usuario'];
+$id_cooperativa =  $_POST['id_cooperativa'];
+$ruc_cooperativa = $_POST['ruc_cooperativa'];
+$nombre_cooperativa = $_POST['nombre_cooperativa'];
+$cantidad_buses = $_POST['cantidad_buses'];
 
-$sql = "UPDATE Usuarios SET email_usuario='$email_usuario', nombre_usuario='$nombre_usuario', apellido_usuario='$apellido_usuario', telefono_usuario='$telefono_usuario' WHERE id_usuario='$id_usuario'";
+$sql = "UPDATE Cooperativas SET ruc_cooperativa='$ruc_cooperativa', nombre_cooperativa='$nombre_cooperativa', cantidad_buses='$cantidad_buses' WHERE id_cooperativa='$id_cooperativa'";
 
 if ($conexion->query($sql)===TRUE) {
     echo json_encode(array('OK'=>TRUE));
