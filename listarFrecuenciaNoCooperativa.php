@@ -2,13 +2,13 @@
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: Origin, X-Requested-with, Content-type, Authorization');
 header('Content-Type: application/json');
-header('Access-Control-Allow-Methods: GET, OPTIONS');
+header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
 
 include 'conexionBDRemota.php';
 
-$id_coop = $_GET['id_coop'];
+$id_cooperativa_pertenece = $_POST['id_cooperativa_pertenece'];
 
-$sql = "SELECT * FROM Buses WHERE id_socio IN (SELECT id_usuario FROM Usuarios WHERE id_coop = '$id_coop')";
+$sql = "SELECT * FROM Frecuencias WHERE id_frecuencia NOT IN(SELECT id_frecuencia_asignada FROM Frecuencias_Cooperativas WHERE id_cooperativa_pertenece = '$id_cooperativa_pertenece')";
 
 $resultado = $conexion->query($sql);
 
@@ -22,11 +22,7 @@ if ($resultado->num_rows > 0) {
     $json = json_encode($lista, JSON_UNESCAPED_UNICODE);
 
     echo $json;
-} else {
-    echo json_encode(array('mensaje' => 'No se encontraron registros de buses asociados a la cooperativa'));
-}
+} 
 
 $conexion->close();
-
 ?>
-

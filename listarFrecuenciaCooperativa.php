@@ -8,7 +8,15 @@ include 'conexionBDRemota.php';
 
 $id_cooperativa_pertenece = $_GET['id_cooperativa_pertenece'];
 
-$sql = "SELECT * FROM Frecuencias WHERE id_frecuencia IN(SELECT id_frecuencia_asignada FROM Frecuencias_Cooperativas WHERE id_cooperativa_pertenece='$id_cooperativa_pertenece')";
+
+$sql = "SELECT F.*, C1.nombre_ciudad AS origen, C2.nombre_ciudad AS destino 
+FROM Frecuencias AS F 
+JOIN Ciudades AS C1 ON C1.id_ciudad = F.origen_frecuencia 
+JOIN Ciudades AS C2 ON C2.id_ciudad = F.destino_frecuencia 
+JOIN Frecuencias_Cooperativas AS FC ON FC.id_frecuencia_asignada = F.id_frecuencia 
+JOIN Cooperativas AS C ON C.id_cooperativa = FC.id_cooperativa_pertenece 
+WHERE C.id_cooperativa = '$id_cooperativa_pertenece'";
+
 
 $resultado = $conexion->query($sql);
 
@@ -22,6 +30,7 @@ if ($resultado->num_rows > 0) {
     $json = json_encode($lista, JSON_UNESCAPED_UNICODE);
 
     echo $json;
+
 }
 
 $conexion->close();
