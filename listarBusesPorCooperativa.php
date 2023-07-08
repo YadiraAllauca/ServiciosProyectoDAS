@@ -2,11 +2,11 @@
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: Origin, X-Requested-with, Content-type, Authorization');
 header('Content-Type: application/json');
-header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
+header('Access-Control-Allow-Methods: GET, OPTIONS');
 
 include 'conexionBDRemota.php';
 
-$id_coop = $_POST['id_coop'];
+$id_coop = $_GET['id_coop'];
 
 $sql = "SELECT * FROM Buses WHERE id_socio IN (SELECT id_usuario FROM Usuarios WHERE id_coop = '$id_coop')";
 
@@ -27,3 +27,6 @@ if ($resultado->num_rows > 0) {
 }
 
 $conexion->close();
+
+?>
+

@@ -2,11 +2,11 @@
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: Origin, X-Requested-with, Content-type, Authorization');
 header('Content-Type: application/json');
-header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
+header('Access-Control-Allow-Methods: GET, OPTIONS');
 
 include 'conexionBDRemota.php';
 
-$id_cooperativa = $_POST['id_cooperativa'];
+$id_cooperativa = $_GET['id_cooperativa'];
 
 $sql = "SELECT V.*, U.*, VD.*, P.*, C1.nombre_ciudad AS origen, C2.nombre_ciudad AS destino
 FROM Ventas AS V
@@ -37,3 +37,6 @@ if ($resultado->num_rows > 0) {
 }
 
 $conexion->close();
+
+?>
+
