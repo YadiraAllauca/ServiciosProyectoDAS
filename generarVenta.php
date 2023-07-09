@@ -6,7 +6,7 @@ header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
 
 include 'conexionBDRemota.php';
 
-$id_comprador= $_POST['id_comprador'];
+$id_comprador = $_POST['id_comprador'];
 $id_viaje_pertenece = $_POST['id_viaje_pertenece'];
 $id_parada_pertenece = $_POST['id_parada_pertenece'];
 $fecha_venta = $_POST['fecha_venta'];
@@ -16,12 +16,13 @@ $codigo_qr_venta = $_POST['codigo_qr_venta'];
 $comprobante_venta = $_POST['comprobante_venta'];
 
 $sql = "INSERT INTO Ventas(id_comprador, id_viaje_pertenece, id_parada_pertenece, fecha_venta, id_forma_pago, estado_venta, total_venta, codigo_qr_venta, comprobante_venta) VALUES
-($id_comprador, $id_viaje_pertenece, $id_parada_pertenece, '$fecha_venta', $id_forma_pago, 0,$total_venta, '$codigo_qr_venta', '$comprobante_venta')";
+('$id_comprador', '$id_viaje_pertenece', '$id_parada_pertenece', '$fecha_venta', '$id_forma_pago', 0, '$total_venta', '$codigo_qr_venta', '$comprobante_venta')";
 
-if ($conexion->query($sql)===TRUE) {
-    echo json_encode(array('OK'=>TRUE));
+if ($conexion->query($sql) === TRUE) {
+    $id_compra_generada = $conexion->insert_id;
+    echo json_encode(array('id_compra' => $id_compra_generada));
 } else {
-    echo json_encode(array('OK'=>FALSE, 'errorMsg'=>$sql.$conexion->error));
+    echo json_encode(array('errorMsg' => $sql . $conexion->error));
 }
 
 $conexion->close();
