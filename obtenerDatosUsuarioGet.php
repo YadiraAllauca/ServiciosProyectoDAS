@@ -6,7 +6,7 @@ header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
 
 include 'conexionBDRemota.php';
 
-$id_usuario = $_POST['id_usuario'];
+$id_usuario = $_GET['id_usuario'];
 
 $sql = "SELECT * FROM Usuarios WHERE id_usuario = '$id_usuario'";
 

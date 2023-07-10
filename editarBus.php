@@ -14,13 +14,9 @@ $cantidad_asientos = $_POST['cantidad_asientos'];
 $fotografia = $_POST['fotografia'];
 $id_socio = $_POST['id_socio'];
 $estado = $_POST['estado'];
-$chasis_bus = $_POST['chasis_bus'];
 
-if (empty($id_bus)) {
-$sql = "INSERT INTO Buses (numero_bus, placa_bus, carroceria_bus, cantidad_asientos, fotografia, id_socio, estado, chasis_bus) VALUES ('$numero_bus', '$placa_bus', '$carroceria_bus','$cantidad_asientos', '$fotografia', '$id_socio', '$estado', '$chasis_bus')";
-}else{
-    $sql = "UPDATE Buses SET numero_bus='$numero_bus', placa_bus='$placa_bus', carroceria_bus='$carroceria_bus', cantidad_asientos='$cantidad_asientos', fotografia='$fotografia', id_socio='$id_socio', estado=$estado, chasis_bus='$chasis_bus'  WHERE id_bus='$id_bus'";
-}
+$sql = "UPDATE Buses SET numero_bus='$numero_bus', placa_bus='$placa_bus', carroceria_bus='$carroceria_bus', cantidad_asientos='$cantidad_asientos', fotografia='$fotografia', id_socio='$id_socio', estado=$estado  WHERE id_bus='$id_bus'";
+
 if ($conexion->query($sql)===TRUE) {
     echo json_encode(array('OK'=>TRUE));
 } else {

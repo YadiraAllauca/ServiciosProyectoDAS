@@ -6,15 +6,14 @@ header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
 
 include 'conexionBDRemota.php';
 
-$id_venta_pertenece = $_POST['id_venta_pertenece'];
 $id_asiento = $_POST['id_asiento'];
-$costo_asiento = $_POST['costo_asiento'];
-$costo_parada = $_POST['costo_parada'];
-$cedula_pasajero = $_POST['cedula_pasajero'];
+$id_bus_pertenece = $_POST['id_bus_pertenece'];
+$numero_puesto = $_POST['numero_puesto'];
+$estado = $_POST['estado'];
+$descripcion_asiento = $_POST['descripcion_asiento'];
+$costo_adicional = $_POST['costo_adicional'];
 
-$suma = $costo_asiento + $costo_parada;
-
-$sql = "INSERT INTO Detalle_Venta(id_venta_pertenece, id_asiento, costo_asiento, costo_parada, cedula_pasajero, total_detalle) VALUES ($id_venta_pertenece, $id_asiento, $costo_asiento, $costo_parada, '$cedula_pasajero', $suma)";
+$sql = "UPDATE Asientos SET id_bus_pertenece='$id_bus_pertenece', numero_puesto='$numero_puesto', estado='$estado', descripcion_asiento='$descripcion_asiento', costo_adicional='$costo_adicional'  WHERE id_asiento='$id_asiento'";
 
 if ($conexion->query($sql)===TRUE) {
     echo json_encode(array('OK'=>TRUE));

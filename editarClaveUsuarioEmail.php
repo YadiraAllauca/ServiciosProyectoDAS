@@ -6,16 +6,15 @@ header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
 
 include 'conexionBDRemota.php';
 
-$id_venta = $_POST['id_venta'];
-$estado_venta = $_POST['estado_venta'];
+$email_usuario =  $_POST['email_usuario'];
+$clave_usuario = $_POST['clave_usuario'];
 
-$sql = "UPDATE Ventas SET estado_venta = '$estado_venta' WHERE id_venta = '$id_venta'";
+$sql = "UPDATE Usuarios SET clave_usuario='$clave_usuario' WHERE email_usuario='$email_usuario'";
 
 if ($conexion->query($sql) === TRUE) {
-    echo json_encode(array('OK' => TRUE));
+  echo json_encode(array('OK' => TRUE));
 } else {
-    echo json_encode(array('OK' => FALSE, 'errorMsg' => $sql . $conexion->error));
+  echo json_encode(array('OK' => FALSE, 'errorMsg' => $sql . $conexion->error));
 }
 
 $conexion->close();
-?>

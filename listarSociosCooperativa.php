@@ -6,7 +6,7 @@ header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
 
 include 'conexionBDRemota.php';
 
-$id_cooperativa = $_POST['id_cooperativa'];
+$id_cooperativa = $_GET['id_cooperativa'];
 
 $sql = "SELECT * FROM Usuarios WHERE id_coop IN(SELECT id_cooperativa FROM Cooperativas WHERE id_cooperativa='$id_cooperativa') AND tipo_usuario='socio'";
 

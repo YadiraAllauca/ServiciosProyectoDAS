@@ -20,9 +20,20 @@ $sql = "INSERT INTO Ventas(id_comprador, id_viaje_pertenece, id_parada_pertenece
 
 if ($conexion->query($sql) === TRUE) {
     $id_compra_generada = $conexion->insert_id;
-    echo json_encode(array('id_compra' => $id_compra_generada));
+    
+    // Obtener el objeto insertado
+    $sqlQuery = "SELECT * FROM Ventas WHERE id_venta = $id_compra_generada";
+    $resultado = $conexion->query($sqlQuery);
+    
+    if ($resultado->num_rows > 0) {
+        $fila = $resultado->fetch_assoc();
+        echo json_encode($fila);
+    } else {
+        echo json_encode(array('errorMsg' => 'No se encontró el objeto insertado'));
+    }
 } else {
     echo json_encode(array('errorMsg' => $sql . $conexion->error));
 }
 
 $conexion->close();
+?>

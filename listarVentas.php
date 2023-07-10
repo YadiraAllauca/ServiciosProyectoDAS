@@ -32,11 +32,8 @@ if ($resultado->num_rows > 0) {
 
   echo $json;
 } else {
-
   echo json_encode(array('mensaje' => 'No se encontraron registros'));
 }
 
 $conexion->close();
-
 ?>
-

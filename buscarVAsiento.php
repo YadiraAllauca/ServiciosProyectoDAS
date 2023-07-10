@@ -8,20 +8,20 @@
 
   $origen =  $_GET['origen'];
   $destino =  $_GET['destino'];
+  $asiento = $_GET['asiento'];
 
-  $sql = "SELECT VD.*, C1.nombre_ciudad AS origen, C2.nombre_ciudad AS destino, P1.nombre_provincia AS origenProvincia, P2.nombre_provincia AS destinoProvincia, P.*, C.nombre_cooperativa, B.* 
-  FROM Viajes_Diarios AS VD 
-  JOIN Frecuencias_Cooperativas AS FC ON FC.id_asignacion = VD.id_asignacion_pertenece
-  JOIN Frecuencias AS F ON F.id_frecuencia = FC.id_frecuencia_asignada
+  $sql = "SELECT A.*, VD.*, C1.nombre_ciudad AS origen, C2.nombre_ciudad AS destino, 
+  P1.nombre_provincia AS origenProvincia, P2.nombre_provincia AS destinoProvincia, 
+  P.*, C.nombre_cooperativa, B.* FROM Viajes_Diarios AS VD 
+  JOIN Frecuencias_Cooperativas AS FC ON FC.id_asignacion = VD.id_asignacion_pertenece 
   JOIN Paradas AS P ON P.id_asignacion_pertenece = VD.id_asignacion_pertenece 
-  JOIN Ciudades AS C1 ON C1.id_ciudad = P.origen_parada 
-  JOIN Ciudades AS C2 ON C2.id_ciudad = P.destino_parada 
-  JOIN Provincias AS P1 ON P1.id_provincia = C1.id_provincia 
-  JOIN Provincias AS P2 ON P2.id_provincia = C2.id_provincia 
+  JOIN Ciudades AS C1 ON C1.id_ciudad = P.origen_parada JOIN Ciudades AS C2 ON C2.id_ciudad = P.destino_parada 
+  JOIN Provincias AS P1 ON P1.id_provincia = C1.id_provincia JOIN Provincias AS P2 ON P2.id_provincia = C2.id_provincia
   JOIN Cooperativas AS C ON C.id_cooperativa = FC.id_cooperativa_pertenece 
-  JOIN Usuarios AS U ON U.id_coop = C.id_cooperativa 
-  JOIN Buses AS B ON B.id_socio = U.id_usuario 
-  WHERE C1.nombre_ciudad='$origen' AND C2.nombre_ciudad='$destino' GROUP BY P.id_parada";
+  JOIN Usuarios AS U ON U.id_coop = C.id_cooperativa JOIN Buses AS B ON B.id_socio = U.id_usuario 
+  JOIN Asientos AS A ON A.id_bus_pertenece = B.id_bus
+  WHERE A.descripcion_asiento = '$asiento' AND C1.nombre_ciudad = '$origen' AND C2.nombre_ciudad = '$destino'
+  GROUP BY P.id_parada";
 
   $resultado = $conexion->query($sql);
 

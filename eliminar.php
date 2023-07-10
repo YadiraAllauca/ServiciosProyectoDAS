@@ -6,14 +6,14 @@ header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
 
 include 'conexionBDRemota.php';
 
-$id_viaje = $_POST['id_viaje'];
+$id_viaje_diario = $_POST['id_viaje_directo'];
 
-$sql = "DELETE FROM Viajes_Diarios WHERE id_viaje = '$id_viaje'";
+$sql = "DELETE FROM Viajes_Diarios WHERE id_viaje_diario=$id_viaje_diario";
 
-if ($conexion->query($sql) === TRUE) {
-    echo json_encode(array('OK' => TRUE));
+if ($conexion->query($sql)===TRUE) {
+    echo json_encode(array('OK'=>TRUE));
 } else {
-    echo json_encode(array('OK' => FALSE, 'errorMsg' => $sql . $conexion->error));
+    echo json_encode(array('OK'=>FALSE, 'errorMsg'=>$sql.$conexion->error));
 }
 
 $conexion->close();

@@ -6,9 +6,18 @@ header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
 
 include 'conexionBDRemota.php';
 
-$id_viaje_pertenece = $_POST['id_viaje_pertenece'];
+$opcion = $_POST['opcion'];
 
-$sql = "SELECT * FROM Detalle_Venta WHERE id_venta_pertenece IN (SELECT id_venta FROM Ventas WHERE id_viaje_pertenece = '$id_viaje_pertenece')";
+if($opcion == 1){
+  $sql = "SELECT * FROM Cooperativas WHERE id_cooperativa<>1";
+}
+else if($opcion == 2){
+  $sql = "SELECT DISTINCT descripcion_asiento FROM Asientos";
+}else if($opcion == 3){
+  $sql = "SELECT DISTINCT chasis_bus FROM Buses";
+}else{
+  $sql = "SELECT DISTINCT carroceria_bus FROM Buses";
+}
 
 $resultado = $conexion->query($sql);
 
@@ -23,8 +32,8 @@ if ($resultado->num_rows > 0) {
 
     echo $json;
 } else {
-    echo json_encode(array('mensaje' => 'No se encontraron registros de buses asociados a la cooperativa'));
+
+    echo json_encode(array('mensaje' => 'No se encontraron registros en la tabla'));
 }
 
 $conexion->close();
-?>

@@ -14,19 +14,15 @@ JOIN Viajes_Diarios AS VD ON VD.id_viaje = V.id_viaje_pertenece
 JOIN Paradas AS P ON P.id_parada = V.id_parada_pertenece
 JOIN Ciudades AS C1 ON C1.id_ciudad = P.origen_parada
 JOIN Ciudades AS C2 ON C2.id_ciudad = P.destino_parada 
-WHERE id_comprador ='$id_comprador'";
+WHERE id_comprador ='$id_comprador'
+ORDER BY V.id_venta DESC
+LIMIT 1";
 
 $resultado = $conexion->query($sql);
 
 if ($resultado->num_rows > 0) {
-    $lista = array();
-
-    while ($fila = $resultado->fetch_assoc()) {
-        $lista[] = $fila;
-    }
-
-    $json = json_encode($lista, JSON_UNESCAPED_UNICODE);
-
+    $fila = $resultado->fetch_assoc();
+    $json = json_encode($fila, JSON_UNESCAPED_UNICODE);
     echo $json;
 } else {
     echo json_encode(array('mensaje' => 'No se encontraron registros en la tabla'));

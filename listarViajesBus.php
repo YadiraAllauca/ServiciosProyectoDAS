@@ -6,7 +6,7 @@ header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
 
 include 'conexionBDRemota.php';
 
-$id_bus = $_POST['id_bus'];
+$id_bus = $_GET['id_bus'];
 
 $sql = "SELECT VD.*, C1.nombre_ciudad AS origen, C2.nombre_ciudad AS destino
 FROM Viajes_Diarios AS VD 
